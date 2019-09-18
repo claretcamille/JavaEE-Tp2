@@ -64,6 +64,9 @@ public class TicketMachine {
 	 * @throws IllegalArgumentException if amount is not positive
 	 */
 	public void insertMoney(int amount) {
+                                                if (amount <= 0){
+                                                                        throw new IllegalArgumentException("Montant négatif non accepté");
+                                                }
 		balance = balance + amount;
 	}
 
@@ -73,8 +76,10 @@ public class TicketMachine {
 	 * @return the balance
 	 */
 	public int refund() {
+                                               int valBalance = balance ; // Insertion valBalance pour sauvegarder le montant donné
 		System.out.println("Je vous rends : " + balance + " centimes");
-		return balance;
+                                                balance = 0 ; // Réinnitialisation de la balance 
+		return valBalance;
 	}
 
 	/**
@@ -83,13 +88,23 @@ public class TicketMachine {
 	 * @return vrai si le ticket a été imprimé, faux sinon
 	 */
 	public boolean printTicket() {
-		// Simulate the printing of a ticket.
-		System.out.println("##################");
-		System.out.println("# The BlueJ Line");
-		System.out.println("# Ticket");
-		System.out.println("# " + price + " cents.");
-		System.out.println("##################");
-		System.out.println();
-		return true;
-	}
+                                                if(balance >= price){
+                                                                        // Simulate the printing of a ticket.
+                                                                        System.out.println("##################");
+                                                                        System.out.println("# The BlueJ Line");
+                                                                        System.out.println("# Ticket");
+                                                                        System.out.println("# " + price + " cents.");
+                                                                        System.out.println("##################");
+                                                                        System.out.println();
+                                                                        // Incrémentation du total :
+                                                                        total = total + price;
+                                                                        // Désincrémentation de la balance :
+                                                                        balance = balance - price ; 
+                                                                        return true;
+                                                } else {
+                                                                        System.err.println("Impression non possible ! Montant insuffisant");
+                                                                        return false;
+                                                }
+                        }
+		
 }

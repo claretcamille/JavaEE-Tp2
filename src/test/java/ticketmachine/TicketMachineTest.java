@@ -39,18 +39,18 @@ public class TicketMachineTest {
                                                 // Verification que les montants sont differents :
                                                assertNotSame( machine.getBalance(),machine.getPrice());
                                                //Test de la non impression du ticket : 
-                                               assetFalse(machine.printTicket());  
+                                               assertFalse(machine.printTicket());  
                         }
                         
                         @Test
                         //S4: Impression du ticket si le montant est sufissant
                         public void PrintTicket(){
                                                  // Insertion prix necessaire => val PRICE
-                                                machine.insertMoney(PRICE);
+                                                machine.insertMoney(PRICE+1);
                                                 // Verification que les montants sont differents :
                                                assertNotSame( machine.getBalance(),machine.getPrice());
                                                //Test de la non impression du ticket : 
-                                               assetTrue(machine.printTicket());
+                                               assertTrue(machine.printTicket());           
                         }
                         
                         @Test
@@ -76,7 +76,9 @@ public class TicketMachineTest {
                                                 assertEquals(PRICE, machine.getTotal());
                                                 
                                                 // Si plusieur montant collecter
+                                                machine.insertMoney(PRICE);
                                                 machine.printTicket();
+                                                machine.insertMoney(PRICE);
                                                 machine.printTicket();
                                                 assertEquals(PRICE*3, machine.getTotal()); // 3 tickets imprimer ==> le total est de 3 fois le prix du ticket 
                                                 
